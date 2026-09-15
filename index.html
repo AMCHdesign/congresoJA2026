@@ -83,13 +83,14 @@
 
   .place{
     margin-top: 1.4rem;
-    display: inline-flex; align-items: center; gap: .5rem;
+    display: flex; flex-direction: column; align-items: center; gap: .35rem;
     font-size: .95rem; font-weight: 500;
     color: var(--blush);
     text-shadow: 0 1px 12px rgba(0,0,0,.6);
-    max-width: 30ch;
+    max-width: 32ch;
   }
-  .place svg{ flex: 0 0 auto; opacity: .9; }
+  .place svg{ opacity: .9; margin-bottom: .1rem; }
+  .place .city{ font-size: .88rem; color: var(--blush-dim); }
 
   /* ---------- Botones ---------- */
   .links{
@@ -99,12 +100,12 @@
 
   .btn{
     position: relative; overflow: hidden;
-    display: flex; align-items: center; gap: 14px;
+    display: flex; align-items: center; gap: 12px;
     width: 100%; min-height: 64px;
     padding: 14px 18px;
     border-radius: var(--radius);
     text-decoration: none;
-    font-weight: 600; font-size: 1.02rem;
+    font-weight: 600; font-size: .97rem; letter-spacing: -.005em;
     color: var(--blush);
     background: rgba(20,6,10,.42);
     border: 1px solid rgba(251,227,218,.20);
@@ -123,12 +124,12 @@
   .btn:hover::before{ opacity: 1; }
 
   .btn .ico{
-    flex: 0 0 42px; width: 42px; height: 42px;
+    flex: 0 0 40px; width: 40px; height: 40px;
     display: grid; place-items: center; border-radius: 12px;
     background: rgba(251,227,218,.10);
   }
-  .btn .ico svg{ width: 21px; height: 21px; }
-  .btn .txt{ flex: 1; text-align: left; }
+  .btn .ico svg{ width: 20px; height: 20px; }
+  .btn .txt{ flex: 1; text-align: left; line-height: 1.2; text-wrap: balance; }
   .btn .chev{ flex: 0 0 auto; opacity: .5; transition: transform .18s ease, opacity .18s ease; }
 
   .btn:hover, .btn:focus-visible{
@@ -214,10 +215,11 @@
     <img class="logo reveal d1" src="logo_justificados.png" alt="Justificados — Congreso JA AMCh" />
 
     <!-- LUGAR -->
-    <p class="place reveal d2">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      John Andrews Adventist Academy · Santiago de Chile
-    </p>
+    <div class="place reveal d2">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span>John Andrews Adventist Academy</span>
+      <span class="city">Santiago de Chile · 2026</span>
+    </div>
 
     <nav class="links" aria-label="Enlaces del congreso">
 
@@ -226,7 +228,7 @@
         <span class="ico" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
         </span>
-        <span class="txt">Inscríbete a los talleres</span>
+        <span class="txt">Inscríbete a los Workshops</span>
         <span class="chev" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
       </a>
 
