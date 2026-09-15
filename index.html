@@ -2,359 +2,343 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#2A0910" />
 <title>Justificados · Congreso JA AMCh</title>
-<meta name="description" content="Central de enlaces del Congreso JA Justificados — inscripción a talleres, programa y más." />
+<meta name="description" content="Congreso JA Justificados — inscripción a talleres y programa." />
 
-<!-- Favicon inline (marca simple) -->
+<!-- Favicon -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%238B0A1E'/><text x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23FBE3DA'>J</text></svg>" />
 
-<!-- Tipografías: Bricolage Grotesque (display) + Inter (interfaz) -->
+<!-- Tipografía única: Inter (rápida de cargar para el escaneo del QR) -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
 <style>
   :root{
-    /* Paleta rojiza — de vino profundo a brasa */
-    --wine-black: #1B070C;   /* fondo base, negro avinado */
-    --oxblood:    #4A0912;   /* rojo sangre oscuro */
-    --carmine:    #8B0A1E;   /* carmesí profundo */
-    --crimson:    #C81D2E;   /* rojo primario, vivo */
-    --ember:      #F0473E;   /* brasa, resalte cálido */
-    --blush:      #FBE3DA;   /* texto cálido claro */
-    --blush-dim:  #E3B7AE;   /* texto secundario */
-    --gold:       #E9B26B;   /* chispa de luz (gracia) */
-
+    --crimson: #C81D2E;
+    --carmine: #8B0A1E;
+    --ember:   #F0473E;
+    --blush:   #FBE3DA;
+    --blush-dim: #E7C6BE;
     --radius: 16px;
-    --maxw: 440px;
+    --maxw: 460px;
   }
 
   *{ box-sizing: border-box; margin: 0; padding: 0; }
-
   html{ -webkit-text-size-adjust: 100%; }
 
   body{
+    min-height: 100vh;
     min-height: 100dvh;
-    background: var(--wine-black);
-    color: var(--blush);
     font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--blush);
     line-height: 1.5;
-    display: flex;
-    justify-content: center;
-    padding: clamp(24px, 6vw, 48px) 20px calc(40px + env(safe-area-inset-bottom));
     position: relative;
     overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(28px,7vh,64px) 22px;
+    padding-bottom: calc(clamp(28px,7vh,64px) + env(safe-area-inset-bottom));
   }
 
-  /* ---- Degradados abstractos de fondo ---- */
-  .field{
-    position: fixed;
-    inset: -20% -20% -20% -20%;
-    z-index: 0;
-    pointer-events: none;
-    filter: saturate(1.1);
+  /* ---------- Fondo (foto responsive, sin background-fixed por iOS) ---------- */
+  .bg{
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url('fondo%20web.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
-  .blob{
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(55px);
-    opacity: 1;
-    will-change: transform;
+  /* En pantallas anchas la foto es vertical (1080x1350): la desenfocamos y
+     oscurecemos un poco para que llene sin verse pixelada ni recortada raro. */
+  @media (min-width: 760px){
+    .bg{ filter: brightness(.9); transform: scale(1.04); }
   }
-  .blob.b1{
-    width: 78vw; height: 78vw; max-width:680px; max-height:680px;
-    top: -14%; left: -20%;
-    background: radial-gradient(circle at 38% 38%, var(--crimson), var(--carmine) 48%, transparent 72%);
-    animation: drift1 22s ease-in-out infinite;
-  }
-  .blob.b2{
-    width: 74vw; height: 74vw; max-width:600px; max-height:600px;
-    bottom: -16%; right: -20%;
-    background: radial-gradient(circle at 58% 42%, var(--ember), var(--carmine) 52%, transparent 74%);
-    animation: drift2 26s ease-in-out infinite;
-  }
-  .blob.b3{
-    width: 52vw; height: 52vw; max-width:430px; max-height:430px;
-    top: 40%; right: -14%;
-    background: radial-gradient(circle at 50% 50%, var(--gold), transparent 66%);
-    opacity: .35;
-    animation: drift3 30s ease-in-out infinite;
-  }
-  /* velo que oscurece bordes/centro para legibilidad, sin apagar el color */
-  .veil{
+  /* Velo para asegurar contraste del texto y botones sobre cualquier foto */
+  .overlay{
     position: fixed; inset: 0; z-index: 1; pointer-events: none;
     background:
-      radial-gradient(135% 100% at 50% 12%, transparent 46%, rgba(12,3,7,.42) 100%),
-      linear-gradient(to bottom, rgba(12,3,7,.05), rgba(12,3,7,.30));
+      radial-gradient(120% 80% at 50% 22%, rgba(15,4,8,.10), rgba(15,4,8,.62) 100%),
+      linear-gradient(to bottom, rgba(15,4,8,.30) 0%, rgba(15,4,8,.10) 40%, rgba(15,4,8,.55) 100%);
   }
-  /* grano sutil */
-  .grain{
-    position: fixed; inset: 0; z-index: 2; pointer-events: none;
-    opacity: .05; mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
+  /* Capa de partículas (brasas) */
+  #embers{ position: fixed; inset: 0; z-index: 2; pointer-events: none; }
 
-  @keyframes drift1{ 0%,100%{ transform: translate(0,0) scale(1);} 50%{ transform: translate(6%,4%) scale(1.08);} }
-  @keyframes drift2{ 0%,100%{ transform: translate(0,0) scale(1);} 50%{ transform: translate(-5%,-6%) scale(1.1);} }
-  @keyframes drift3{ 0%,100%{ transform: translate(0,0) scale(1);} 50%{ transform: translate(-8%,6%) scale(1.12);} }
-
-  /* ---- Contenido ---- */
+  /* ---------- Contenido ---------- */
   main{
-    position: relative;
-    z-index: 3;
-    width: 100%;
-    max-width: var(--maxw);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    position: relative; z-index: 3;
+    width: 100%; max-width: var(--maxw);
+    display: flex; flex-direction: column; align-items: center;
     text-align: center;
   }
 
-  .eyebrow{
-    font-size: .8rem;
-    letter-spacing: .04em;
-    color: var(--blush-dim);
-    font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: .5rem;
+  .logo{
+    width: clamp(190px, 62vw, 300px);
+    height: auto;
+    filter: drop-shadow(0 6px 26px rgba(0,0,0,.45));
   }
-  .eyebrow::before,
-  .eyebrow::after{
-    content:"";
-    width: 22px; height: 1px;
-    background: linear-gradient(to right, transparent, var(--blush-dim));
-  }
-  .eyebrow::after{ background: linear-gradient(to left, transparent, var(--blush-dim)); }
 
-  .wordmark{
-    font-family: "Bricolage Grotesque", sans-serif;
-    font-weight: 800;
-    font-size: clamp(2.9rem, 15.5vw, 4.6rem);
-    line-height: .92;
-    letter-spacing: -.035em;
-    margin: .55rem 0 0;
+  .place{
+    margin-top: 1.4rem;
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-size: .95rem; font-weight: 500;
     color: var(--blush);
-    text-shadow: 0 2px 40px rgba(240,71,62,.35);
-  }
-
-  .tagline{
-    margin-top: .85rem;
-    font-size: 1rem;
-    color: var(--blush-dim);
-    font-weight: 400;
+    text-shadow: 0 1px 12px rgba(0,0,0,.6);
     max-width: 30ch;
   }
-  .tagline .ref{
-    display:block;
-    margin-top: .35rem;
-    font-size: .78rem;
-    letter-spacing: .06em;
-    color: var(--ember);
-    font-weight: 600;
-  }
+  .place svg{ flex: 0 0 auto; opacity: .9; }
 
-  /* pastilla con fecha/lugar — editable */
-  .meta{
-    margin-top: 1.1rem;
-    font-size: .8rem;
-    font-weight: 500;
-    color: var(--blush);
-    padding: .4rem .95rem;
-    border: 1px solid rgba(251,227,218,.22);
-    border-radius: 999px;
-    background: rgba(251,227,218,.05);
-    backdrop-filter: blur(4px);
-  }
-
-  /* ---- Botones / enlaces ---- */
+  /* ---------- Botones ---------- */
   .links{
-    margin-top: 2.2rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+    margin-top: 2.1rem; width: 100%;
+    display: flex; flex-direction: column; gap: 14px;
   }
 
   .btn{
-    --bg: rgba(251,227,218,.06);
-    --bd: rgba(251,227,218,.16);
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    width: 100%;
-    min-height: 62px;
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; gap: 14px;
+    width: 100%; min-height: 64px;
     padding: 14px 18px;
     border-radius: var(--radius);
-    background: var(--bg);
-    border: 1px solid var(--bd);
-    color: var(--blush);
     text-decoration: none;
-    font-weight: 600;
-    font-size: 1rem;
-    backdrop-filter: blur(8px);
-    transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+    font-weight: 600; font-size: 1.02rem;
+    color: var(--blush);
+    background: rgba(20,6,10,.42);
+    border: 1px solid rgba(251,227,218,.20);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     -webkit-tap-highlight-color: transparent;
+    transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+    isolation: isolate;
   }
+  /* brillo que sigue al cursor (solo se activa en PC vía JS) */
+  .btn::before{
+    content:""; position: absolute; inset: 0; z-index: -1;
+    background: radial-gradient(160px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.16), transparent 60%);
+    opacity: 0; transition: opacity .25s ease;
+  }
+  .btn:hover::before{ opacity: 1; }
+
   .btn .ico{
-    flex: 0 0 40px;
-    width: 40px; height: 40px;
-    display: grid; place-items: center;
-    border-radius: 11px;
-    background: rgba(251,227,218,.08);
+    flex: 0 0 42px; width: 42px; height: 42px;
+    display: grid; place-items: center; border-radius: 12px;
+    background: rgba(251,227,218,.10);
   }
-  .btn .ico svg{ width: 20px; height: 20px; }
-  .btn .txt{ flex: 1; text-align: left; line-height: 1.25; }
-  .btn .txt small{
-    display: block;
-    font-weight: 400;
-    font-size: .78rem;
-    color: var(--blush-dim);
-    margin-top: 1px;
-  }
-  .btn .chev{ flex: 0 0 auto; opacity: .55; transition: transform .18s ease, opacity .18s ease; }
+  .btn .ico svg{ width: 21px; height: 21px; }
+  .btn .txt{ flex: 1; text-align: left; }
+  .btn .chev{ flex: 0 0 auto; opacity: .5; transition: transform .18s ease, opacity .18s ease; }
 
   .btn:hover, .btn:focus-visible{
     transform: translateY(-2px);
-    background: rgba(251,227,218,.1);
-    border-color: rgba(251,227,218,.32);
+    background: rgba(28,9,14,.6);
+    border-color: rgba(251,227,218,.36);
     outline: none;
   }
   .btn:hover .chev, .btn:focus-visible .chev{ transform: translateX(3px); opacity: .9; }
-  .btn:active{ transform: translateY(0) scale(.99); }
-  .btn:focus-visible{ box-shadow: 0 0 0 3px rgba(240,71,62,.5); }
+  .btn:active{ transform: translateY(0) scale(.985); }
+  .btn:focus-visible{ box-shadow: 0 0 0 3px rgba(240,71,62,.55); }
 
-  /* Botón primario: inscripción a talleres */
+  /* Botón principal — talleres */
   .btn.primary{
-    background: linear-gradient(135deg, var(--crimson), var(--carmine) 70%);
-    border-color: rgba(240,71,62,.55);
-    box-shadow: 0 10px 30px -8px rgba(200,29,46,.6);
     color: #fff;
+    background: linear-gradient(135deg, var(--crimson), var(--carmine) 72%);
+    border-color: rgba(240,71,62,.5);
+    box-shadow: 0 12px 30px -10px rgba(200,29,46,.7);
+    background-size: 180% 180%;
+    /* dos animaciones: entrada (rise) + brillo continuo (sheen) */
+    animation: rise .6s cubic-bezier(.2,.7,.2,1) .24s both, sheen 7s ease .5s infinite;
   }
-  .btn.primary .ico{ background: rgba(255,255,255,.16); }
-  .btn.primary .txt small{ color: rgba(255,255,255,.78); }
+  .btn.primary .ico{ background: rgba(255,255,255,.18); }
   .btn.primary:hover, .btn.primary:focus-visible{
-    background: linear-gradient(135deg, var(--ember), var(--crimson) 70%);
     border-color: rgba(255,255,255,.5);
-    box-shadow: 0 16px 38px -8px rgba(240,71,62,.7);
+    box-shadow: 0 18px 40px -10px rgba(240,71,62,.8);
   }
+  @keyframes sheen{ 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
 
-  /* animación de entrada escalonada */
+  /* Ondas al tocar/click */
+  .ripple{
+    position: absolute; border-radius: 50%;
+    background: rgba(255,255,255,.35);
+    transform: translate(-50%,-50%) scale(0);
+    animation: rip .55s ease-out forwards;
+    pointer-events: none; z-index: 0;
+  }
+  @keyframes rip{ to{ transform: translate(-50%,-50%) scale(1); opacity: 0; } }
+
+  /* ---------- Redes (pie) ---------- */
+  footer{ margin-top: 2.4rem; display: flex; flex-direction: column; align-items: center; gap: .75rem; }
+  .social{ display: flex; gap: 14px; }
+  .social a{
+    width: 44px; height: 44px; border-radius: 50%;
+    display: grid; place-items: center;
+    color: var(--blush);
+    background: rgba(20,6,10,.4);
+    border: 1px solid rgba(251,227,218,.2);
+    backdrop-filter: blur(6px);
+    transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .social a:hover, .social a:focus-visible{
+    transform: translateY(-2px);
+    background: var(--carmine);
+    border-color: rgba(255,255,255,.4);
+    outline: none;
+  }
+  .social svg{ width: 20px; height: 20px; }
+  .footnote{ font-size: .74rem; color: var(--blush-dim); opacity: .8; }
+
+  /* ---------- Entrada ---------- */
   .reveal{ opacity: 0; transform: translateY(14px); animation: rise .6s cubic-bezier(.2,.7,.2,1) forwards; }
-  .reveal.d1{ animation-delay: .05s; }
-  .reveal.d2{ animation-delay: .12s; }
-  .reveal.d3{ animation-delay: .20s; }
-  .reveal.d4{ animation-delay: .28s; }
-  .reveal.d5{ animation-delay: .36s; }
-  .reveal.d6{ animation-delay: .44s; }
-  @keyframes rise{ to{ opacity: 1; transform: translateY(0);} }
-
-  footer{
-    margin-top: 2.4rem;
-    font-size: .78rem;
-    color: var(--blush-dim);
-    opacity: .8;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: .3rem;
-  }
-  footer strong{ color: var(--blush); font-weight: 600; }
+  .d1{ animation-delay:.05s } .d2{ animation-delay:.14s } .d3{ animation-delay:.24s }
+  .d4{ animation-delay:.34s } .d5{ animation-delay:.44s }
+  @keyframes rise{ to{ opacity:1; transform:none } }
 
   @media (prefers-reduced-motion: reduce){
-    .blob{ animation: none; }
     .reveal{ animation: none; opacity: 1; transform: none; }
-    .btn{ transition: background .15s ease, border-color .15s ease; }
+    .btn.primary{ animation: none; }
+    #embers{ display: none; }
   }
 </style>
 </head>
 <body>
 
-  <!-- Fondo abstracto -->
-  <div class="field" aria-hidden="true">
-    <span class="blob b1"></span>
-    <span class="blob b2"></span>
-    <span class="blob b3"></span>
-  </div>
-  <div class="veil" aria-hidden="true"></div>
-  <div class="grain" aria-hidden="true"></div>
+  <div class="bg" aria-hidden="true"></div>
+  <div class="overlay" aria-hidden="true"></div>
+  <canvas id="embers" aria-hidden="true"></canvas>
 
   <main>
-    <p class="eyebrow reveal d1">Congreso JA · AMCh</p>
+    <!-- LOGO -->
+    <img class="logo reveal d1" src="logo_justificados.png" alt="Justificados — Congreso JA AMCh" />
 
-    <h1 class="wordmark reveal d1">Justificados</h1>
-
-    <p class="tagline reveal d2">
-      Un encuentro para vivir la gracia que nos declara libres.
-      <span class="ref">Justificados por la fe · Romanos 5:1</span>
+    <!-- LUGAR -->
+    <p class="place reveal d2">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      John Andrews Adventist Academy · Santiago de Chile
     </p>
-
-    <!-- EDITAR: fecha y lugar del congreso -->
-    <span class="meta reveal d2">Santiago · 2026</span>
 
     <nav class="links" aria-label="Enlaces del congreso">
 
-      <!-- 1 · FORMULARIO DE TALLERES (principal) -->
-      <!-- EDITAR href: pega aquí el link de tu formulario de inscripción -->
-      <a class="btn primary reveal d3" href="#" target="_blank" rel="noopener">
+      <!-- 1 · TALLERES (formulario JotForm) -->
+      <a class="btn primary reveal d3" href="https://form.jotform.com/262527467523664" target="_blank" rel="noopener">
         <span class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
         </span>
-        <span class="txt">Inscríbete a los talleres
-          <small>Elige y reserva tu cupo</small>
-        </span>
-        <span class="chev" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-        </span>
-      </a>
-
-      <!-- 2 · PROGRAMA -->
-      <!-- EDITAR href: pega aquí el link del programa -->
-      <a class="btn reveal d4" href="#" target="_blank" rel="noopener">
-        <span class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-        </span>
-        <span class="txt">Ver el programa
-          <small>Horarios y actividades</small>
-        </span>
-        <span class="chev" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-        </span>
-      </a>
-
-      <!-- ================================================================
-           BOTONES EXTRA (opcionales) — descoméntalos y edita el href
-           cuando los necesites. Borra los que no vayas a usar.
-      ================================================================= -->
-
-      <!-- UBICACIÓN
-      <a class="btn reveal d5" href="#" target="_blank" rel="noopener">
-        <span class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </span>
-        <span class="txt">Cómo llegar<small>Ubicación en el mapa</small></span>
+        <span class="txt">Inscríbete a los talleres</span>
         <span class="chev" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
       </a>
-      -->
 
-      <!-- INSTAGRAM
-      <a class="btn reveal d6" href="#" target="_blank" rel="noopener">
+      <!-- 2 · PROGRAMA (PDF en el repo). Se abre en el visor del navegador. -->
+      <!-- Para forzar descarga en vez de previsualizar, agrega:  download  al <a> -->
+      <a class="btn reveal d4" href="PROGRAMA%20JUSTIFICADOS_WEB.pdf" target="_blank" rel="noopener">
         <span class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h4"/></svg>
         </span>
-        <span class="txt">Síguenos en Instagram<small>@congreso.ja</small></span>
+        <span class="txt">Ver el programa</span>
         <span class="chev" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
       </a>
-      -->
 
     </nav>
 
     <footer class="reveal d5">
-      <strong>Congreso JA · AMCh</strong>
-      <span>Justificados por su gracia</span>
+      <div class="social">
+        <a href="https://www.instagram.com/adventistasamch/" target="_blank" rel="noopener" aria-label="Instagram AMCh">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.facebook.com/adventistasmetro" target="_blank" rel="noopener" aria-label="Facebook AMCh">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3l.4-3H14V4.2c0-.9.3-1.5 1.6-1.5H17V.1C16.7 0 15.7 0 14.6 0 12.2 0 10.5 1.5 10.5 4v2H7.5v3h3v11H14Z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@AdventistasAMCh" target="_blank" rel="noopener" aria-label="YouTube AMCh">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.6 12 31 31 0 0 0 2 15.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 22.4 12 31 31 0 0 0 22 8.2Z"/><path d="m10 15 5-3-5-3Z" fill="currentColor"/></svg>
+        </a>
+      </div>
+      <span class="footnote">Adventistas AMCh</span>
     </footer>
   </main>
 
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Ondas al tocar (móvil + PC), y brillo que sigue al cursor (PC) ---------- */
+  var canHover = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
+  document.querySelectorAll('.btn').forEach(function(btn){
+    btn.addEventListener('pointerdown', function(e){
+      var r = btn.getBoundingClientRect();
+      var size = Math.max(r.width, r.height) * 2;
+      var s = document.createElement('span');
+      s.className = 'ripple';
+      s.style.width = s.style.height = size + 'px';
+      s.style.left = (e.clientX - r.left) + 'px';
+      s.style.top  = (e.clientY - r.top)  + 'px';
+      btn.appendChild(s);
+      s.addEventListener('animationend', function(){ s.remove(); });
+    });
+    if (canHover){
+      btn.addEventListener('pointermove', function(e){
+        var r = btn.getBoundingClientRect();
+        btn.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        btn.style.setProperty('--my', (e.clientY - r.top)  + 'px');
+      });
+    }
+  });
+
+  /* ---------- Brasas flotantes (canvas, liviano) ---------- */
+  if (reduce) return;
+  var canvas = document.getElementById('embers');
+  var ctx = canvas.getContext('2d');
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var W, H, parts, raf, running = true;
+  var COUNT = matchMedia('(max-width: 600px)').matches ? 18 : 34;
+
+  function size(){
+    W = canvas.clientWidth = window.innerWidth;
+    H = canvas.clientHeight = window.innerHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  function spark(){
+    return {
+      x: Math.random()*W,
+      y: H + Math.random()*H,
+      r: 0.8 + Math.random()*2.2,
+      sp: 0.25 + Math.random()*0.7,
+      drift: (Math.random()-0.5)*0.4,
+      a: 0.15 + Math.random()*0.5,
+      hue: Math.random() < 0.35 ? 32 : 6   // mezcla de brasa dorada y roja
+    };
+  }
+  function init(){ size(); parts = []; for (var i=0;i<COUNT;i++){ var p=spark(); p.y=Math.random()*H; parts.push(p); } }
+  function frame(){
+    if (!running) return;
+    ctx.clearRect(0,0,W,H);
+    for (var i=0;i<parts.length;i++){
+      var p = parts[i];
+      p.y -= p.sp; p.x += p.drift;
+      if (p.y < -10){ parts[i] = spark(); continue; }
+      ctx.beginPath();
+      var g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*4);
+      g.addColorStop(0, 'hsla('+p.hue+',95%,62%,'+p.a+')');
+      g.addColorStop(1, 'hsla('+p.hue+',95%,55%,0)');
+      ctx.fillStyle = g;
+      ctx.arc(p.x,p.y,p.r*4,0,Math.PI*2);
+      ctx.fill();
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  init();
+  frame();
+
+  var rt;
+  window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(init, 200); });
+  document.addEventListener('visibilitychange', function(){
+    running = !document.hidden;
+    if (running){ frame(); } else { cancelAnimationFrame(raf); }
+  });
+})();
+</script>
 </body>
 </html>
